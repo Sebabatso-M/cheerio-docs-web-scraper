@@ -50,8 +50,11 @@ async function savePdf(links) {
             await page.pdf({
                 path: `./pdfs/${name}`
             })
+
+            console.log(`Saved: ${name}`);
         }
 
+        console.log('=======================');
         console.log('Pdfs have been saved');
 
     } catch (err) {
