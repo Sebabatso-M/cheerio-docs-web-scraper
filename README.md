@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Cheerio Website Scraper
 
 ![Image](/image/i.png)
