@@ -28,12 +28,14 @@ async function savePdf(links) {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-
+    const options = {
+        path: ''
+    }
     try {
         for (let i = 1; i <= links.length - 1; i++){
             
             let href = links[i];
-            await page.goto(href);
+            await page.goto(href, {waitUntil: 'networkidle2'});
             console.log(await page.title());
         }
 
