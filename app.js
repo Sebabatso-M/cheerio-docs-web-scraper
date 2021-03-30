@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 
+// get page(s) to be saved as pdf
 async function getPageLinks() {
 
     const browser = await puppeteer.launch({
@@ -24,20 +25,34 @@ async function getPageLinks() {
     }
 };
 
+//removes forward slashes from text
+function removeSlashes(text){
+    return text.replace(/\//ig, '-');
+}
+
+//save pages as pdf
 async function savePdf(links) {
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    const options = {
-        path: ''
-    }
+    
     try {
         for (let i = 1; i <= links.length - 1; i++){
             
             let href = links[i];
+
             await page.goto(href, {waitUntil: 'networkidle2'});
-            console.log(await page.title());
+
+            let title = await page.title() 
+
+            let name = removeSlashes(title) + '.pdf'; //name file is to be saved as
+            
+            await page.pdf({
+                path: `./pdfs/${name}`
+            })
         }
+
+        console.log('Pdfs have been saved');
 
     } catch (err) {
         console.error(err)
